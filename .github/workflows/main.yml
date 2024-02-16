@@ -1,0 +1,28 @@
+name: Build APK
+
+on:
+  workflow_dispatch
+
+jobs: 
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      
+    - name: Checkout
+      uses: actions/checkout@v4.1.1
+
+    - name: Setup Java JDK
+      uses: actions/setup-java@v4.0.0
+      with: 
+        java-version: 1.8
+        distribution: 'temurin'
+
+    - name: Build with Gradle
+      uses: ./gradlew build
+
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v4.3.1
+      with: 
+        name: app-debug.apk
+        path: app/build/outputs/apk/debug/app-debug.apk
